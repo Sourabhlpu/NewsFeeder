@@ -62,7 +62,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ArticleViewHolder>
         holder.mAvatarNameView.setText(mArticles.get(position).getmAvatarName());
         holder.mAvatarSubView.setText(mArticles.get(position).getmAvatarSub());
 
-        if (mRowIndex == 1) {
+        if (position == 1) {
 
             holder.horizontalList.setLayoutManager(new LinearLayoutManager(holder.context, LinearLayoutManager.HORIZONTAL, false));
             holder.horizontalAdapter = new SectionRVAdapter(holder.context,holder.sections);
