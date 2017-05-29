@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,10 +21,11 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
     List<Section> mSection;
     Context mContext;
 
-    public SectionRVAdapter(Context context,List<Section> sections)
+    public SectionRVAdapter(Context context, ArrayList<Section> sections)
     {
         mContext = context;
         mSection = sections;
+
     }
 
     public static class SectionViewHolder extends RecyclerView.ViewHolder
@@ -64,5 +66,11 @@ public class SectionRVAdapter extends RecyclerView.Adapter<SectionRVAdapter.Sect
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public void setDataset(ArrayList<Section> sections)
+    {
+        mSection = sections;
+        notifyDataSetChanged();
     }
 }

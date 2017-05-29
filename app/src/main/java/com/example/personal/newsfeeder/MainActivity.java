@@ -99,31 +99,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         ConnectivityManager cm = (ConnectivityManager) this.getSystemService(this.CONNECTIVITY_SERVICE);
         NetworkInfo info = cm.getActiveNetworkInfo();
 
-        // arraylist for storing the section objects
-
-        List<Section> sections = new ArrayList<Section>();
-
-        //creating the section class objects
-
-        Section technology = new Section(R.drawable.placeholder,getString(R.string.technology_section));
-        Section film = new Section(R.drawable.placeholder,getString(R.string.film_section));
-        Section sports = new Section(R.drawable.placeholder,getString(R.string.sports_section));
-        Section politics = new Section(R.drawable.placeholder,getString(R.string.politics_section));
-        Section culture = new Section(R.drawable.placeholder,getString(R.string.culture_section));
-        Section education = new Section(R.drawable.placeholder,getString(R.string.education_section));
-        Section business = new Section(R.drawable.placeholder,getString(R.string.business_section));
-
-        //adding the above objects to the arrylist
-
-        sections.add(technology);
-        sections.add(film);
-        sections.add(sports);
-        sections.add(politics);
-        sections.add(culture);
-        sections.add(education);
-        sections.add(business);
-
-
         if(info != null && info.isConnected())
         {
             LoaderManager loaderManager = getLoaderManager();
@@ -149,18 +124,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mAdapter = new RVAdapter(this, new ArrayList<TheArticle>());
         mRecyclerView.setAdapter(mAdapter);
-
-        //setting up the section view in the main view
-        RecyclerView sectionRecyclerView = (RecyclerView)findViewById(R.id.section_recycler_view);
-        sectionRecyclerView.setHasFixedSize(true);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,false);
-
-        sectionRecyclerView.setLayoutManager(layoutManager);
-
-        SectionRVAdapter sectionAdapter = new SectionRVAdapter(this,sections);
-        sectionRecyclerView.setAdapter(sectionAdapter);
-
     }
 
     @Override
