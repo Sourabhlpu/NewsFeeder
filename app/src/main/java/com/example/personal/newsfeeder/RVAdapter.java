@@ -20,9 +20,12 @@ import java.util.List;
  * Created by personal on 3/12/2017.
  */
 
-public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ArticleViewHolder> {
+public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String LOG_TAG = RVAdapter.class.getSimpleName();
+
+    private final int CARD_WITH_HORIZONTAL_SCROLL = 1;
+    private final int CARD_WITHOUT_HORIZONTAL_SCROLL = 2;
 
     List<TheArticle> mArticles;
     Context mContext;
@@ -40,51 +43,60 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ArticleViewHolder>
     }
 
     @Override
-    public ArticleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public int getItemViewType(int position) {
 
-        mRowIndex++;
+        if(position == 0)
+        {
+            return CARD_WITH_HORIZONTAL_SCROLL;
+        }
+        else{
+            return CARD_WITHOUT_HORIZONTAL_SCROLL;
+        }
+    }
 
-        //Log.v(LOG_TAG, "The rowIndex is " + mRowIndex);
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_item, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        RecyclerView.ViewHolder viewHolder;
 
-        ArticleViewHolder avh = new ArticleViewHolder(v);
-        return avh;
+    switch (viewType)
+    {
+        case CARD_WITH_HORIZONTAL_SCROLL:
+            View v1 = inflater.inflate(R.layout.card_item_with_horizontal_scroll, parent, false);
+            viewHolder = new ArticleViewHolderWithHorizontalScroll(v1);
+            break;
+        case CARD_WITHOUT_HORIZONTAL_SCROLL:
+            View v2 = inflater.inflate(R.layout.card_item,parent,false);
+            viewHolder = new ArticleViewHolder(v2);
+            break;
+        default:
+            View v3 = inflater.inflate(R.layout.card_item,parent,false);
+            viewHolder = new ArticleViewHolder(v3);
+            break;
+
+    }
+    return viewHolder;
 
     }
 
     @Override
-    public void onBindViewHolder(ArticleViewHolder holder, int position) {
-
-        Log.v(LOG_TAG, "The position variable is " + position);
-        Log.v(LOG_TAG, "The rowIndex is " + mRowIndex);
-        holder.mAvatarView.setText(mArticles.get(position).getmAvatarInitial());
-        holder.mAvatarNameView.setText(mArticles.get(position).getmAvatarName());
-        holder.mAvatarSubView.setText(mArticles.get(position).getmAvatarSub());
-
-        if (position == 1) {
-
-            holder.horizontalList.setLayoutManager(new LinearLayoutManager(holder.context, LinearLayoutManager.HORIZONTAL, false));
-            holder.horizontalAdapter = new SectionRVAdapter(holder.context,holder.sections);
-            holder.horizontalList.setAdapter(holder.horizontalAdapter);
-            holder.horizontalAdapter.setDataset(holder.sections);
-
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        switch (holder.getItemViewType())
+        {
+            case CARD_WITH_HORIZONTAL_SCROLL:
+                ArticleViewHolderWithHorizontalScroll vh1 = (ArticleViewHolderWithHorizontalScroll) holder;
+                configureArticleViewHolderWithHorizontalScroll(vh1,position);
+                break;
+            case CARD_WITHOUT_HORIZONTAL_SCROLL:
+                ArticleViewHolder vh2 = (ArticleViewHolder)holder;
+                configureArticleViewHolder(vh2,position);
         }
 
-        String imageUrl = mArticles.get(position).getmImageURL();
-
-        Picasso.with(mContext)
-                .load(imageUrl)
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.error_img)
-                .into(holder.mImageView);
-        holder.mTheTitleView.setText(mArticles.get(position).getmTheTitle());
-        // holder.mTheSubtitleView.setText(mArticles.get(position).getmTheSubtitle());
-        holder.mTheThreeLinesView.setText(mArticles.get(position).getmTheThreeLines());
-        //holder.mBookmarkView.setImageResource(mArticles.get(position).getmBookmarkResourceId());
-        // holder.mHeartView.setImageResource(mArticles.get(position).getmHeartResourceId());
 
     }
+
+
 
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
@@ -96,7 +108,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ArticleViewHolder>
         this.notifyDataSetChanged();
     }
 
-    public static class ArticleViewHolder extends RecyclerView.ViewHolder {
+    public static class ArticleViewHolderWithHorizontalScroll extends RecyclerView.ViewHolder {
         CardView cardView;
         TextView mAvatarView;
         TextView mAvatarNameView;
@@ -113,7 +125,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ArticleViewHolder>
         SectionRVAdapter horizontalAdapter;
         int rowIndex;
 
-        ArticleViewHolder(View itemView) {
+        ArticleViewHolderWithHorizontalScroll(View itemView) {
             super(itemView);
             context = itemView.getContext();
             cardView = (CardView) itemView.findViewById(R.id.card_view);
@@ -149,8 +161,89 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.ArticleViewHolder>
             sections.add(business);
 
             horizontalList = (RecyclerView) itemView.findViewById(R.id.section_recycler_view);
-
-
         }
+    }
+
+    public static class ArticleViewHolder extends RecyclerView.ViewHolder {
+        CardView cardView;
+        TextView mAvatarView;
+        TextView mAvatarNameView;
+        TextView mAvatarSubView;
+        ImageView mImageView;
+        TextView mTheTitleView;
+        TextView mTheSubtitleView;
+        TextView mTheThreeLinesView;
+        ImageView mBookmarkView;
+        ImageView mHeartView;
+        Context context;
+
+
+        ArticleViewHolder(View itemView) {
+            super(itemView);
+            context = itemView.getContext();
+            cardView = (CardView) itemView.findViewById(R.id.card_view);
+            mAvatarView = (TextView) itemView.findViewById(R.id.avatar_image);
+            mAvatarNameView = (TextView) itemView.findViewById(R.id.avatar_name);
+            mAvatarSubView = (TextView) itemView.findViewById(R.id.avatar_subhead);
+            mImageView = (ImageView) itemView.findViewById(R.id.image_view);
+            mTheTitleView = (TextView) itemView.findViewById(R.id.the_title);
+            mTheThreeLinesView = (TextView) itemView.findViewById(R.id.the_three_lines);
+            mBookmarkView = (ImageView) itemView.findViewById(R.id.bookmark_image);
+            mHeartView = (ImageView) itemView.findViewById(R.id.heart_image);
+        }
+    }
+
+    private void configureArticleViewHolderWithHorizontalScroll(ArticleViewHolderWithHorizontalScroll holder, int position)
+    {
+        Log.v(LOG_TAG, "The position variable is " + position);
+        Log.v(LOG_TAG, "The rowIndex is " + mRowIndex);
+        holder.mAvatarView.setText(mArticles.get(position).getmAvatarInitial());
+        holder.mAvatarNameView.setText(mArticles.get(position).getmAvatarName());
+        holder.mAvatarSubView.setText(mArticles.get(position).getmAvatarSub());
+
+
+
+        String imageUrl = mArticles.get(position).getmImageURL();
+
+        Picasso.with(mContext)
+                .load(imageUrl)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error_img)
+                .into(holder.mImageView);
+        holder.mTheTitleView.setText(mArticles.get(position).getmTheTitle());
+        // holder.mTheSubtitleView.setText(mArticles.get(position).getmTheSubtitle());
+        holder.mTheThreeLinesView.setText(mArticles.get(position).getmTheThreeLines());
+        //holder.mBookmarkView.setImageResource(mArticles.get(position).getmBookmarkResourceId());
+        // holder.mHeartView.setImageResource(mArticles.get(position).getmHeartResourceId());
+
+        holder.horizontalList.setLayoutManager(new LinearLayoutManager(holder.context, LinearLayoutManager.HORIZONTAL, false));
+        holder.horizontalAdapter = new SectionRVAdapter(holder.context,holder.sections);
+        holder.horizontalList.setAdapter(holder.horizontalAdapter);
+        holder.horizontalAdapter.setDataset(holder.sections);
+
+    }
+
+    public void configureArticleViewHolder(ArticleViewHolder holder, int position)
+    {
+        Log.v(LOG_TAG, "The position variable is " + position);
+        Log.v(LOG_TAG, "The rowIndex is " + mRowIndex);
+        holder.mAvatarView.setText(mArticles.get(position).getmAvatarInitial());
+        holder.mAvatarNameView.setText(mArticles.get(position).getmAvatarName());
+        holder.mAvatarSubView.setText(mArticles.get(position).getmAvatarSub());
+
+
+        String imageUrl = mArticles.get(position).getmImageURL();
+
+        Picasso.with(mContext)
+                .load(imageUrl)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.error_img)
+                .into(holder.mImageView);
+        holder.mTheTitleView.setText(mArticles.get(position).getmTheTitle());
+        // holder.mTheSubtitleView.setText(mArticles.get(position).getmTheSubtitle());
+        holder.mTheThreeLinesView.setText(mArticles.get(position).getmTheThreeLines());
+        //holder.mBookmarkView.setImageResource(mArticles.get(position).getmBookmarkResourceId());
+        // holder.mHeartView.setImageResource(mArticles.get(position).getmHeartResourceId());
+
     }
 }
