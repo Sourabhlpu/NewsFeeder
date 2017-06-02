@@ -27,12 +27,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final int EARTHQUAKE_LOADER_ID = 1;
     private RecyclerView mRecyclerView;
     private RVAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private LinearLayoutManager mLayoutManager;
     private TextView mEmptyTextView;
 
     private static final String API_KEY = "ce10d58e-3c68-451c-beb3-7b6a79f5b75f";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
     private static boolean usingSearch = false;
+
+    private EndlessRecyclerViewScrollListener scrollListener;
+    private Uri.Builder uriBuilder;
 
     @Override
     public Loader<List<TheArticle>> onCreateLoader(int id, Bundle args) {
@@ -43,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 getString(R.string.settings_page_size_default));
 
         Uri baseUri = Uri.parse(NEWS_REQUEST_URL);
-        Uri.Builder uriBuilder = baseUri.buildUpon();
+        uriBuilder = baseUri.buildUpon();
 
         if(orderBy.equals("oldest"))
         {
@@ -122,8 +125,26 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
+            @Override
+            public void onLoadMore(int currentPage, int totalItemCount, RecyclerView recyclerView) {
+
+                loadNextDataFromApi(currentPage);
+
+            }
+        };
+
+        mRecyclerView.addOnScrollListener(scrollListener);
+
         mAdapter = new RVAdapter(this, new ArrayList<TheArticle>());
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    public void loadNextDataFromApi(int currentPage) {
+        uriBuilder.appendQueryParameter("page","currentPage");
+        mAdapter
+        getLoaderManager().restartLoader(EARTHQUAKE_LOADER_ID,null,this);
+
     }
 
     @Override
