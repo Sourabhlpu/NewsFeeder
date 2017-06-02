@@ -104,8 +104,22 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void updateDataset(List<TheArticle> articles) {
-        mArticles = articles;
-        this.notifyDataSetChanged();
+
+        if(mArticles.isEmpty())
+        {
+            mArticles = articles;
+            this.notifyDataSetChanged();
+        }
+        else
+        {
+            int currentSize = this.getItemCount();
+            mArticles.clear();
+            mArticles.addAll(articles);
+            this.notifyItemInserted(currentSize);
+        }
+
+
+
     }
 
     public static class ArticleViewHolderWithHorizontalScroll extends RecyclerView.ViewHolder {

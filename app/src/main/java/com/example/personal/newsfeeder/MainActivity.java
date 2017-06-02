@@ -36,9 +36,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     private EndlessRecyclerViewScrollListener scrollListener;
     private Uri.Builder uriBuilder;
+    private String page = "1";
 
-    @Override
-    public Loader<List<TheArticle>> onCreateLoader(int id, Bundle args) {
+    public String createAPIQueryString(String currentPage)
+    {
+        Log.v(LOG_TAG,"The value of the page index " + currentPage);
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         String orderBy = sharedPrefs.getString(getString(R.string.settings_order_by_key),
                 getString(R.string.settings_orderby_default));
@@ -54,14 +56,23 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             uriBuilder.appendQueryParameter("use-date","published");
 
         }
-       // if(orderBy.equals("relevance") )
+        // if(orderBy.equals("relevance") )
 
         uriBuilder.appendQueryParameter("order-by",orderBy);
         uriBuilder.appendQueryParameter("show-fields","byline,thumbnail,trailText");
+        uriBuilder.appendQueryParameter("page",currentPage);
         uriBuilder.appendQueryParameter("page-size",pageSize);
         uriBuilder.appendQueryParameter("api-key",API_KEY);
 
+        return uriBuilder.toString();
 
+    }
+
+    @Override
+    public Loader<List<TheArticle>> onCreateLoader(int id, Bundle args) {
+
+
+       String queryString = createAPIQueryString(page);
 
         Log.v("The url",LOG_TAG + uriBuilder.toString());
 
@@ -125,6 +136,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+
+
+        mAdapter = new RVAdapter(this, new ArrayList<TheArticle>());
+        mRecyclerView.setAdapter(mAdapter);
+
         scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
             @Override
             public void onLoadMore(int currentPage, int totalItemCount, RecyclerView recyclerView) {
@@ -136,15 +152,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         mRecyclerView.addOnScrollListener(scrollListener);
 
-        mAdapter = new RVAdapter(this, new ArrayList<TheArticle>());
-        mRecyclerView.setAdapter(mAdapter);
+        scrollListener.resetState();
+
+
     }
 
     public void loadNextDataFromApi(int currentPage) {
-        uriBuilder.appendQueryParameter("page","currentPage");
-        mAdapter
+        page = currentPage + "";
+        Log.v(LOG_TAG,"PAGE VALUE IN THE load.. function " + page);
+        getLoaderManager().destroyLoader(EARTHQUAKE_LOADER_ID);
         getLoaderManager().restartLoader(EARTHQUAKE_LOADER_ID,null,this);
-
     }
 
     @Override
