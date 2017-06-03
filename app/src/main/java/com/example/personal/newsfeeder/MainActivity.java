@@ -86,7 +86,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         if (articles != null && !articles.isEmpty()) {
             //articles.clear();
 
-            mAdapter.updateDataset(articles);
+            mAdapter.updateDataset(articles, mRecyclerView);
+            Log.v(LOG_TAG,"The articles object is " + articles);
 
         } else {
             mEmptyTextView.setText("No atricles found");
@@ -108,7 +109,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.recycler_view);
 
         mEmptyTextView = (TextView) findViewById(R.id.empty_text_view);
-
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         ConnectivityManager cm = (ConnectivityManager) this.getSystemService(this.CONNECTIVITY_SERVICE);
         NetworkInfo info = cm.getActiveNetworkInfo();
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
         mRecyclerView.setHasFixedSize(true);
 
         mEmptyTextView = (TextView) findViewById(R.id.empty_text_view);
@@ -159,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public void loadNextDataFromApi(int currentPage) {
         page = currentPage + "";
-        Log.v(LOG_TAG,"PAGE VALUE IN THE load.. function " + page);
+        //Log.v(LOG_TAG,"PAGE VALUE IN THE load.. function " + page);
         getLoaderManager().destroyLoader(EARTHQUAKE_LOADER_ID);
         getLoaderManager().restartLoader(EARTHQUAKE_LOADER_ID,null,this);
     }

@@ -103,7 +103,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public void updateDataset(List<TheArticle> articles) {
+    public void updateDataset(final List<TheArticle> articles, RecyclerView view) {
 
         if(mArticles.isEmpty())
         {
@@ -112,10 +112,20 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         else
         {
-            int currentSize = this.getItemCount();
-            mArticles.clear();
-            mArticles.addAll(articles);
-            this.notifyItemInserted(currentSize);
+            final int currentSize = this.getItemCount();
+            view.post(new Runnable() {
+
+                @Override
+                public void run() {
+
+                    //Log.v(LOG_TAG,"THE SIZE of the items in the list " + currentSize);
+                    mArticles.clear();
+                    mArticles.addAll(articles);
+                    Log.v(LOG_TAG,"The articles after the addAll func" + mArticles.toString());
+                    RVAdapter.this.notifyItemRangeInserted(currentSize,articles.size()-1);
+                }
+            });
+
         }
 
 
@@ -209,8 +219,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private void configureArticleViewHolderWithHorizontalScroll(ArticleViewHolderWithHorizontalScroll holder, int position)
     {
-        Log.v(LOG_TAG, "The position variable is " + position);
-        Log.v(LOG_TAG, "The rowIndex is " + mRowIndex);
+
         holder.mAvatarView.setText(mArticles.get(position).getmAvatarInitial());
         holder.mAvatarNameView.setText(mArticles.get(position).getmAvatarName());
         holder.mAvatarSubView.setText(mArticles.get(position).getmAvatarSub());
@@ -239,8 +248,8 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void configureArticleViewHolder(ArticleViewHolder holder, int position)
     {
-        Log.v(LOG_TAG, "The position variable is " + position);
-        Log.v(LOG_TAG, "The rowIndex is " + mRowIndex);
+        //Log.v(LOG_TAG, "The position variable is " + position);
+        //Log.v(LOG_TAG, "The rowIndex is " + mRowIndex);
         holder.mAvatarView.setText(mArticles.get(position).getmAvatarInitial());
         holder.mAvatarNameView.setText(mArticles.get(position).getmAvatarName());
         holder.mAvatarSubView.setText(mArticles.get(position).getmAvatarSub());
