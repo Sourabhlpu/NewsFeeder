@@ -79,7 +79,7 @@ public final class QueryUtils {
         {
             urlConnection = (HttpURLConnection)inputURL.openConnection();
             urlConnection.setReadTimeout(1000);
-            urlConnection.setConnectTimeout(1000);
+            urlConnection.setConnectTimeout(7000);
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 

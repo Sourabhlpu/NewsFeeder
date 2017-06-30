@@ -46,4 +46,10 @@
     <string name="education_section">Education</string>
     <string name="film_section">Film</string>
 
+    <!-- Strings for the intent used to pass on the detail to the detailactivity !-->
+    <string name="putExtra_avatar_name" translatable="false">Avatar name</string>
+    <string name="putExtra_avatar_sub" translatable="false">Avatar sub</string>
+    <string name="putExtra_image_url" translatable="false">Image Url</string>
+    <string name="putExtra_description" translatable="false">Description</string>
+
 </resources>

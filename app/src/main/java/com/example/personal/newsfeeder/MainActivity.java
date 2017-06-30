@@ -2,6 +2,7 @@ package com.example.personal.newsfeeder;
 
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
@@ -21,7 +22,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<TheArticle>> {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<TheArticle>>,
+RVAdapter.ListItemOnClickHandler{
     private static final String NEWS_REQUEST_URL = "http://content.guardianapis.com/" +
             "search";
     private static final int EARTHQUAKE_LOADER_ID = 1;
@@ -139,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
 
-        mAdapter = new RVAdapter(this, new ArrayList<TheArticle>());
+        mAdapter = new RVAdapter(this, new ArrayList<TheArticle>(), this);
         mRecyclerView.setAdapter(mAdapter);
 
         scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
@@ -183,5 +185,29 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /*
+    * this is the method that main activity overrides to implement onClick
+    * of the ListItemOnClickHandler interface from the adapter.
+    *  We use intent to open the detail activity and pass the details of the article with it
+     */
+
+    @Override
+    public void onClick(TheArticle article) {
+        Context context = this;
+        Class destinationClass = DetailActivity.class;
+        Intent intentToStartDetailActivity = new Intent(context,destinationClass);
+
+        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_avatar_name),
+                article.getmAvatarName());
+        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_avatar_sub),
+                article.getmAvatarSub());
+        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_image_url),
+                article.getmImageURL());
+        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_description),
+                article.getmTheThreeLines());
+
+        startActivity(intentToStartDetailActivity);
     }
 }

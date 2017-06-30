@@ -27,14 +27,36 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int CARD_WITH_HORIZONTAL_SCROLL = 1;
     private final int CARD_WITHOUT_HORIZONTAL_SCROLL = 2;
 
+
+   /*
+    * the interface that is defined below handles the clicks on the articles.
+    * In the constructor we set this variable equal to the MainActivity that implements the
+    * on click of this interface.
+    */
+    final private ListItemOnClickHandler mOnClickHandler;
+
     List<TheArticle> mArticles;
     Context mContext;
     int mRowIndex;
 
-    public RVAdapter(Context context, List<TheArticle> articles) {
+    /*
+     * Declaring the interface that is used to handle the on click
+     * on individual articles.
+
+     */
+
+    public interface ListItemOnClickHandler {
+
+        void onClick(TheArticle article);
+    }
+
+
+
+    public RVAdapter(Context context, List<TheArticle> articles, ListItemOnClickHandler onClickHandler) {
 
         mArticles = articles;
         mContext = context;
+        mOnClickHandler = onClickHandler;
     }
 
     @Override
@@ -119,7 +141,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 public void run() {
 
                     //Log.v(LOG_TAG,"THE SIZE of the items in the list " + currentSize);
-                    mArticles.clear();
+                    //mArticles.clear();
                     mArticles.addAll(articles);
                     Log.v(LOG_TAG,"The articles after the addAll func" + mArticles.toString());
                     RVAdapter.this.notifyItemRangeInserted(currentSize,articles.size()-1);
@@ -132,7 +154,8 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
-    public static class ArticleViewHolderWithHorizontalScroll extends RecyclerView.ViewHolder {
+    public  class ArticleViewHolderWithHorizontalScroll extends RecyclerView.ViewHolder implements
+    View.OnClickListener{
         CardView cardView;
         TextView mAvatarView;
         TextView mAvatarNameView;
@@ -164,6 +187,9 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             sections = new ArrayList<Section>();
 
 
+            itemView.setOnClickListener(this);
+
+
             //creating the section class objects
 
             Section technology = new Section(R.drawable.placeholder, "Technology");
@@ -186,9 +212,16 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             horizontalList = (RecyclerView) itemView.findViewById(R.id.section_recycler_view);
         }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            mOnClickHandler.onClick(mArticles.get(position));
+
+        }
     }
 
-    public static class ArticleViewHolder extends RecyclerView.ViewHolder {
+    public  class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         CardView cardView;
         TextView mAvatarView;
         TextView mAvatarNameView;
@@ -214,6 +247,14 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mTheThreeLinesView = (TextView) itemView.findViewById(R.id.the_three_lines);
             mBookmarkView = (ImageView) itemView.findViewById(R.id.bookmark_image);
             mHeartView = (ImageView) itemView.findViewById(R.id.heart_image);
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            mOnClickHandler.onClick(mArticles.get(position));
         }
     }
 
