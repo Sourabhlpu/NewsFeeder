@@ -280,6 +280,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         //holder.mBookmarkView.setImageResource(mArticles.get(position).getmBookmarkResourceId());
         // holder.mHeartView.setImageResource(mArticles.get(position).getmHeartResourceId());
 
+
         holder.horizontalList.setLayoutManager(new LinearLayoutManager(holder.context, LinearLayoutManager.HORIZONTAL, false));
         holder.horizontalAdapter = new SectionRVAdapter(holder.context,holder.sections);
         holder.horizontalList.setAdapter(holder.horizontalAdapter);

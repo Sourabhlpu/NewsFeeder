@@ -51,5 +51,7 @@
     <string name="putExtra_avatar_sub" translatable="false">Avatar sub</string>
     <string name="putExtra_image_url" translatable="false">Image Url</string>
     <string name="putExtra_description" translatable="false">Description</string>
+    <string name="putExtra_title" translatable="false">Title</string>
+    <string name="putExtra_body_text" translatable="false">BodyText</string>
 
 </resources>

@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private TextView avatarNameTv, avatarSubTv, descriptionTv;
+    private TextView avatarNameTv, avatarSubTv, descriptionTv, titleTv;
     private ImageView imageIv;
     private String mImageUrl;
 
@@ -24,6 +24,8 @@ public class DetailActivity extends AppCompatActivity {
          avatarSubTv = (TextView)findViewById(R.id.detail_activity_avatar_sub);
          descriptionTv = (TextView)findViewById(R.id.detail_activity_description);
          imageIv = (ImageView)findViewById(R.id.detail_activity_image);
+         titleTv = (TextView)findViewById(R.id.title_text_view);
+
 
         Intent intentThatStartedThisActivity = getIntent();
 
@@ -41,7 +43,10 @@ public class DetailActivity extends AppCompatActivity {
                 getStringExtra(getString(R.string.putExtra_avatar_sub)));
 
                 descriptionTv.setText(intentThatStartedThisActivity.
-                getStringExtra(getString(R.string.putExtra_description)));
+                getStringExtra(getString(R.string.putExtra_body_text)));
+
+                titleTv.setText(intentThatStartedThisActivity.
+                getStringExtra(getString(R.string.putExtra_title)));
 
                 mImageUrl = intentThatStartedThisActivity.getStringExtra(getString(R.string.putExtra_image_url));
 
@@ -50,6 +55,7 @@ public class DetailActivity extends AppCompatActivity {
                         .placeholder(R.drawable.placeholder)
                         .error(R.drawable.error_img)
                         .into(imageIv);
+
             }
         }
     }

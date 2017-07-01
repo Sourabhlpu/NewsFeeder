@@ -158,13 +158,14 @@ public final class QueryUtils {
                     String imageUrl = fields.optString("thumbnail");
                     String theTitle = result.optString("webTitle");
                     String description = fields.optString("trailText");
+                    String bodyText = fields.optString("bodyText");
 
 
                     if (imageUrl.equals("")) {
                         imageUrl = "https://goo.gl/PHbk71";
                     }
                     if(!title.equals("") && !subhead.equals("") && !theTitle.equals("") ) {
-                        TheArticle singleArticle = new TheArticle(title, subhead, imageUrl, theTitle, description);
+                        TheArticle singleArticle = new TheArticle(title, subhead, imageUrl, theTitle, description,bodyText);
                         articles.add(singleArticle);
                     }
                 }

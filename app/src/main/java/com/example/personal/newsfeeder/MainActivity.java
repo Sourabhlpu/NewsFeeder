@@ -61,7 +61,7 @@ RVAdapter.ListItemOnClickHandler{
         // if(orderBy.equals("relevance") )
 
         uriBuilder.appendQueryParameter("order-by",orderBy);
-        uriBuilder.appendQueryParameter("show-fields","byline,thumbnail,trailText");
+        uriBuilder.appendQueryParameter("show-fields","byline,thumbnail,trailText,bodyText");
         uriBuilder.appendQueryParameter("page",currentPage);
         uriBuilder.appendQueryParameter("page-size",pageSize);
         uriBuilder.appendQueryParameter("api-key",API_KEY);
@@ -207,6 +207,10 @@ RVAdapter.ListItemOnClickHandler{
                 article.getmImageURL());
         intentToStartDetailActivity.putExtra(getString(R.string.putExtra_description),
                 article.getmTheThreeLines());
+        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_title),
+                article.getmTheTitle());
+        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_body_text),
+                article.getmBodyText());
 
         startActivity(intentToStartDetailActivity);
     }
