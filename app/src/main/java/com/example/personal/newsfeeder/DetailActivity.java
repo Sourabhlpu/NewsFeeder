@@ -1,8 +1,10 @@
 package com.example.personal.newsfeeder;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -42,8 +44,29 @@ public class DetailActivity extends AppCompatActivity {
                 avatarSubTv.setText(intentThatStartedThisActivity.
                 getStringExtra(getString(R.string.putExtra_avatar_sub)));
 
-                descriptionTv.setText(intentThatStartedThisActivity.
-                getStringExtra(getString(R.string.putExtra_body_text)));
+                /*
+                 * We retrieve the detailed article body for an article from the server.
+                 * In order to properly use spacing and paragraphs we choose to use "Body" instead
+                 * of "bodyText"
+                 * "body" contained text in HTML. To solve that problem I used the below code
+                 *  used --> https://stackoverflow.com/questions/2918920/decode-html-entities-in-android
+                 *  to get help.
+                 *
+                 */
+                String body;
+                if(Build.VERSION.SDK_INT >= 24)
+                {
+                    body = Html.fromHtml(intentThatStartedThisActivity.
+                            getStringExtra(getString(R.string.putExtra_body_text)),
+                            Html.FROM_HTML_MODE_LEGACY).toString();
+                }
+                else
+                {
+                    body = Html.fromHtml(intentThatStartedThisActivity.
+                            getStringExtra(getString(R.string.putExtra_body_text))).toString();
+                }
+
+                descriptionTv.setText(body);
 
                 titleTv.setText(intentThatStartedThisActivity.
                 getStringExtra(getString(R.string.putExtra_title)));

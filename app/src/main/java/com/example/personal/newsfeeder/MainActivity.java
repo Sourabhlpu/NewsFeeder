@@ -61,7 +61,7 @@ RVAdapter.ListItemOnClickHandler{
         // if(orderBy.equals("relevance") )
 
         uriBuilder.appendQueryParameter("order-by",orderBy);
-        uriBuilder.appendQueryParameter("show-fields","byline,thumbnail,trailText,bodyText");
+        uriBuilder.appendQueryParameter("show-fields","byline,thumbnail,trailText,body");
         uriBuilder.appendQueryParameter("page",currentPage);
         uriBuilder.appendQueryParameter("page-size",pageSize);
         uriBuilder.appendQueryParameter("api-key",API_KEY);

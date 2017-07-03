@@ -158,7 +158,7 @@ public final class QueryUtils {
                     String imageUrl = fields.optString("thumbnail");
                     String theTitle = result.optString("webTitle");
                     String description = fields.optString("trailText");
-                    String bodyText = fields.optString("bodyText");
+                    String bodyText = fields.optString("body");
 
 
                     if (imageUrl.equals("")) {
