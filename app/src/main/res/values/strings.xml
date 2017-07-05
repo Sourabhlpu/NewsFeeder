@@ -53,5 +53,9 @@
     <string name="putExtra_description" translatable="false">Description</string>
     <string name="putExtra_title" translatable="false">Title</string>
     <string name="putExtra_body_text" translatable="false">BodyText</string>
+    <string name="putExtra_name_initial_letter" translatable="false">First Letter</string>
+
+    <!-- String for the share icon in the detail activity !-->
+    <string name="share_icon_detail_activity">Share</string>
 
 </resources>

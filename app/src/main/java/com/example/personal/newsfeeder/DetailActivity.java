@@ -3,8 +3,11 @@ package com.example.personal.newsfeeder;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,9 +15,9 @@ import com.squareup.picasso.Picasso;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private TextView avatarNameTv, avatarSubTv, descriptionTv, titleTv;
+    private TextView avatarNameTv, avatarSubTv, descriptionTv, titleTv, avatarImage;
     private ImageView imageIv;
-    private String mImageUrl;
+    private String mImageUrl, mUserNamesFirstLetter;
 
 
     @Override
@@ -22,11 +25,12 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-         avatarNameTv = (TextView)findViewById(R.id.detail_activity_avatar_name);
-         avatarSubTv = (TextView)findViewById(R.id.detail_activity_avatar_sub);
+         avatarNameTv = (TextView)findViewById(R.id.avatar_name);
+         avatarSubTv = (TextView)findViewById(R.id.avatar_subhead);
          descriptionTv = (TextView)findViewById(R.id.detail_activity_description);
          imageIv = (ImageView)findViewById(R.id.detail_activity_image);
          titleTv = (TextView)findViewById(R.id.title_text_view);
+         avatarImage = (TextView)findViewById(R.id.avatar_image);
 
 
         Intent intentThatStartedThisActivity = getIntent();
@@ -40,9 +44,14 @@ public class DetailActivity extends AppCompatActivity {
             {
                 avatarNameTv.setText(intentThatStartedThisActivity.
                         getStringExtra(getString(R.string.putExtra_avatar_name)));
+                avatarNameTv.setTextColor(ContextCompat.getColor(this,R.color.white));
 
                 avatarSubTv.setText(intentThatStartedThisActivity.
                 getStringExtra(getString(R.string.putExtra_avatar_sub)));
+                avatarSubTv.setTextColor(ContextCompat.getColor(this,R.color.white));
+
+                avatarImage.setText(intentThatStartedThisActivity.
+                getStringExtra(getString(R.string.putExtra_name_initial_letter)));
 
                 /*
                  * We retrieve the detailed article body for an article from the server.
@@ -81,5 +90,26 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         }
+
+            /*
+             * using the app Toolbar view.
+             * App Toolbar makes it easy to customise the action bar.
+             * Here we set the Toolbar to act as action bar
+             */
+
+        //find the toolbar inside the activity_detail
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar_detail);
+
+        if(toolbar != null)
+        {
+            //set the toolbar to act as action bar for this activity
+            setSupportActionBar(toolbar);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_detail,menu);
+        return true;
     }
 }

@@ -25,11 +25,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.personal.newsfeeder.MainActivity" />
         </activity>
-        <activity android:name=".DetailActivity"
-                   android:label="NewsFeeder Detail">
+        <activity android:name=".DetailActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.personal.newsfeeder.MainActivity"/>
+                android:value="com.example.personal.newsfeeder.MainActivity" />
         </activity>
     </application>
 
