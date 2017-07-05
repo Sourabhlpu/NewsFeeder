@@ -32,44 +32,6 @@
                 android:layout_height="72dp"
                 android:id="@+id/user_profile"
                 layout="@layout/user_name"/>
-          <!--
-            <RelativeLayout
-                android:id="@+id/avatar_section"
-                android:layout_width="match_parent"
-                android:layout_height="72dp"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:background="@drawable/circular_image"
-                    android:id="@+id/avatar_image"
-                    />
-                <TextView
-                    android:id="@+id/avatar_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/avatar_image"
-                    android:layout_marginLeft="4dp"
-                    tools:text="Title"
-                    android:textStyle="bold"
-                    android:textAppearance="?android:textAppearanceMedium"
-                    android:textColor="#616161"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/avatar_name"
-                    android:layout_toRightOf="@id/avatar_image"
-                    android:layout_marginLeft="4dp"
-                    tools:text="Subhead"
-                    android:id="@+id/avatar_subhead"
-                    android:textAppearance="?android:textAppearanceSmall"
-                    android:textColor="#616161"/>
-
-
-            </RelativeLayout>
-           !-->
 
             <ImageView
                 android:layout_height="wrap_content"
