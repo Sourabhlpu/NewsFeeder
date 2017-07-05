@@ -105,6 +105,11 @@ public class DetailActivity extends AppCompatActivity {
             //set the toolbar to act as action bar for this activity
             setSupportActionBar(toolbar);
         }
+
+        //setting the back button on the action bar
+        // see this for reference https://stackoverflow.com/questions/26651602/display-back-arrow-on-toolbar-android
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
