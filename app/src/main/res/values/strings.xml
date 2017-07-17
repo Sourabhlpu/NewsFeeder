@@ -47,15 +47,20 @@
     <string name="film_section">Film</string>
 
     <!-- Strings for the intent used to pass on the detail to the detailactivity !-->
+
     <string name="putExtra_avatar_name" translatable="false">Avatar name</string>
     <string name="putExtra_avatar_sub" translatable="false">Avatar sub</string>
     <string name="putExtra_image_url" translatable="false">Image Url</string>
     <string name="putExtra_description" translatable="false">Description</string>
     <string name="putExtra_title" translatable="false">Title</string>
-    <string name="putExtra_body_text" translatable="false">BodyText</string>
     <string name="putExtra_name_initial_letter" translatable="false">First Letter</string>
 
     <!-- String for the share icon in the detail activity !-->
     <string name="share_icon_detail_activity">Share</string>
+    <!-- This string is used by the intent to open the detail activity !-->
+    <string name="detailActivityIntent">detailIntent</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

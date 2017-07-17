@@ -150,6 +150,7 @@ public final class QueryUtils {
             for(int i=0; i<results.length(); i++)
             {
                 JSONObject result = results.optJSONObject(i);
+                String detailPageLink = result.optString("webUrl");
                 String sectionId = result.optString("sectionId");
                 if(!sectionId.equals("crosswords")) {
                     JSONObject fields = result.optJSONObject("fields");
@@ -158,14 +159,15 @@ public final class QueryUtils {
                     String imageUrl = fields.optString("thumbnail");
                     String theTitle = result.optString("webTitle");
                     String description = fields.optString("trailText");
-                    String bodyText = fields.optString("body");
+
+                    Log.v(LOG_TAG, "The link saved to the article object " + detailPageLink);
 
 
                     if (imageUrl.equals("")) {
                         imageUrl = "https://goo.gl/PHbk71";
                     }
                     if(!title.equals("") && !subhead.equals("") && !theTitle.equals("") ) {
-                        TheArticle singleArticle = new TheArticle(title, subhead, imageUrl, theTitle, description,bodyText);
+                        TheArticle singleArticle = new TheArticle(title, subhead, imageUrl, theTitle, description,detailPageLink);
                         articles.add(singleArticle);
                     }
                 }

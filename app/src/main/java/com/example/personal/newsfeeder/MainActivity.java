@@ -209,10 +209,10 @@ RVAdapter.ListItemOnClickHandler{
                 article.getmTheThreeLines());
         intentToStartDetailActivity.putExtra(getString(R.string.putExtra_title),
                 article.getmTheTitle());
-        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_body_text),
-                article.getmBodyText());
         intentToStartDetailActivity.putExtra(getString(R.string.putExtra_name_initial_letter),
                 article.getmAvatarInitial());
+        intentToStartDetailActivity.putExtra(getString(R.string.detailActivityIntent),
+                article.getmDetailPageLink());
 
         startActivity(intentToStartDetailActivity);
     }

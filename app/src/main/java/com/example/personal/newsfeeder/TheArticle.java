@@ -15,11 +15,11 @@ public class TheArticle {
     private String mTheThreeLines;
     private int mBookmarkResourceId;
     private int mHeartResourceId;
-    private String mBodyText;
+    private String mDetailPageLink;
 
     public TheArticle(String avatarName, String avatarSub, String imageURL,
                       String theTitle, String theThreeLines, int bookmarkResourceId,
-                      int heartResourceId, String bodyText) {
+                      int heartResourceId, String detailPageLink) {
         mAvatarInitial = avatarName.charAt(0) + "";
         mAvatarName = avatarName;
         mAvatarSub = avatarSub;
@@ -29,18 +29,18 @@ public class TheArticle {
         mTheThreeLines = theThreeLines;
         mBookmarkResourceId = bookmarkResourceId;
         mHeartResourceId = heartResourceId;
-        mBodyText = bodyText;
+        mDetailPageLink = detailPageLink;
     }
 
     public TheArticle(String avatarName, String avatarSub, String imageURL,
-                      String theTitle, String theThreeLines, String bodyText
+                      String theTitle, String theThreeLines, String detailPageLink
     ) {
         mAvatarInitial = avatarName.charAt(0) + "";
         mAvatarName = avatarName;
         mAvatarSub = avatarSub;
         mImageURL = imageURL;
         mTheTitle = theTitle;
-        mBodyText = bodyText;
+        mDetailPageLink = detailPageLink;
         mTheThreeLines = theThreeLines;
 
     }
@@ -71,7 +71,7 @@ public class TheArticle {
         return mTheThreeLines;
     }
 
-    public String getmBodyText(){return mBodyText; }
+    public String getmDetailPageLink(){return mDetailPageLink; }
 
     public int getmBookmarkResourceId() {
         return mBookmarkResourceId;
