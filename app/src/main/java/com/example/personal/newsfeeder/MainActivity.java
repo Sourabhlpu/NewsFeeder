@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         RVAdapter.ListItemOnClickHandler {
 
     //this is the string that we will use to fetch the json data.
+    //for more details about this API refer to the following link --> http://open-platform.theguardian.com/explore/
 
     private static final String NEWS_REQUEST_URL = "http://content.guardianapis.com/" +
             "search";
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private static final String API_KEY = "ce10d58e-3c68-451c-beb3-7b6a79f5b75f";
     private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
-    private static boolean usingSearch = false;
+
     private RecyclerView mRecyclerView;
     private RVAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
@@ -51,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     /*
       * this method will build our string to query for the right data
-      * it will return the query String
-      * @param currentPage is passed in which is the current article page we have
+      * it will return the query String.
+      * @param currentPage is passed in which is the page #.
      */
 
     public String createAPIQueryString(String currentPage) {
@@ -84,7 +85,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             uriBuilder.appendQueryParameter("use-date", "published");
 
         }
-        // if(orderBy.equals("relevance") )
+
+        /*
+          * this is the sample url that's created with a few appended parameters
+          * the following method adds the parameter to the uri
+           http://content.guardianapis.com/search?order-by=relevance&use-date=published&api-key=ce10d58e-3c68-451c-beb3-7b6a79f5b75f
+        */
 
 
         uriBuilder.appendQueryParameter("order-by", orderBy);
@@ -93,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         uriBuilder.appendQueryParameter("page-size", pageSize);
         uriBuilder.appendQueryParameter("api-key", API_KEY);
 
-        // this is the sample url thats created with a few appended parameters
-        // http://content.guardianapis.com/search?order-by=relevance&use-date=published&api-key=ce10d58e-3c68-451c-beb3-7b6a79f5b75f
+
 
         // convert the uri to string and then return it.
         return uriBuilder.toString();
