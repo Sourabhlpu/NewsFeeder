@@ -13,6 +13,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
  * Each time we load new data we just increase the page number and pass it to the main class.
  * The main class then uses that page number as a query parameter to load the data again and the loader
    is started again.
+ * Refer to this article for more details --> https://github.com/codepath/android_guides/wiki/Endless-Scrolling-with-AdapterViews-and-RecyclerView
  */
 
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
