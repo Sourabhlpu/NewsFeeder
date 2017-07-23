@@ -1,7 +1,9 @@
 package com.example.personal.newsfeeder;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.customtabs.CustomTabsIntent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -14,7 +16,7 @@ public class DetailActivity extends AppCompatActivity {
 
     private TextView avatarNameTv, avatarSubTv, avatarImage;
     WebView mWebView;
-    private String  mWebViewUrl;
+    private String  detailPageUrl;
     private static final String LOG_TAG = DetailActivity.class.getSimpleName();
 
 
@@ -47,11 +49,25 @@ public class DetailActivity extends AppCompatActivity {
                 avatarImage.setText(intentThatStartedThisActivity.
                         getStringExtra(getString(R.string.putExtra_name_initial_letter)));
 
-                mWebViewUrl = intentThatStartedThisActivity.getStringExtra(getString(R.string.detailActivityIntent));
+                detailPageUrl = intentThatStartedThisActivity.getStringExtra(getString(R.string.detailActivityIntent));
 
-                Log.v(LOG_TAG, "The link to url is " + mWebViewUrl);
+                Log.v(LOG_TAG, "The link to url is " + detailPageUrl);
 
-                mWebView.loadUrl(mWebViewUrl);
+                Uri uri = Uri.parse(detailPageUrl);
+
+                CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
+
+                intentBuilder.setToolbarColor(ContextCompat.getColor(this,R.color.colorPrimary));
+                intentBuilder.setSecondaryToolbarColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
+
+                intentBuilder.setStartAnimations(this,android.R.anim.slide_out_right,
+                        android.R.anim.slide_in_left);
+                intentBuilder.setExitAnimations(this,android.R.anim.slide_in_left,
+                        android.R.anim.slide_out_right);
+
+                CustomTabsIntent customTabsIntent = intentBuilder.build();
+
+                customTabsIntent.launchUrl(this,uri);
 
 
             }

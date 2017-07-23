@@ -2,7 +2,6 @@ package com.example.personal.newsfeeder;
 
 
 import android.app.LoaderManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
 import android.content.SharedPreferences;
@@ -11,6 +10,8 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.customtabs.CustomTabsIntent;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -293,25 +294,22 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onClick(TheArticle article) {
-        Context context = this;
-        Class destinationClass = DetailActivity.class;
-        Intent intentToStartDetailActivity = new Intent(context, destinationClass);
 
-        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_avatar_name),
-                article.getmAvatarName());
-        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_avatar_sub),
-                article.getmAvatarSub());
-        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_image_url),
-                article.getmImageURL());
-        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_description),
-                article.getmTheThreeLines());
-        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_title),
-                article.getmTheTitle());
-        intentToStartDetailActivity.putExtra(getString(R.string.putExtra_name_initial_letter),
-                article.getmAvatarInitial());
-        intentToStartDetailActivity.putExtra(getString(R.string.detailActivityIntent),
-                article.getmDetailPageLink());
+        String uriString = article.getmDetailPageLink();
 
-        startActivity(intentToStartDetailActivity);
+        Uri uri = Uri.parse(uriString);
+        CustomTabsIntent.Builder intentBuilder = new CustomTabsIntent.Builder();
+
+        intentBuilder.setToolbarColor(ContextCompat.getColor(this,R.color.colorPrimary));
+        intentBuilder.setSecondaryToolbarColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
+
+        intentBuilder.setStartAnimations(this, android.R.anim.slide_out_right,
+                android.R.anim.slide_out_right);
+        intentBuilder.setExitAnimations(this, android.R.anim.slide_in_left,
+                android.R.anim.slide_in_left);
+
+        CustomTabsIntent customTabsIntent = intentBuilder.build();
+
+        customTabsIntent.launchUrl(this,uri);
     }
 }
