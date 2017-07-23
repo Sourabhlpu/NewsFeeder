@@ -303,10 +303,10 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         intentBuilder.setToolbarColor(ContextCompat.getColor(this,R.color.colorPrimary));
         intentBuilder.setSecondaryToolbarColor(ContextCompat.getColor(this,R.color.colorPrimaryDark));
 
-        intentBuilder.setStartAnimations(this, android.R.anim.slide_out_right,
-                android.R.anim.slide_out_right);
-        intentBuilder.setExitAnimations(this, android.R.anim.slide_in_left,
-                android.R.anim.slide_in_left);
+        intentBuilder.setExitAnimations(this, R.anim.right_to_left_end,
+                R.anim.left_to_right_end);
+        intentBuilder.setStartAnimations(this, R.anim.left_to_right_start,
+                R.anim.right_to_left_start);
 
         CustomTabsIntent customTabsIntent = intentBuilder.build();
 
