@@ -1,4 +1,4 @@
-package com.example.personal.newsfeeder.data.NewsContract;
+package com.example.personal.newsfeeder.data;
 
 import android.provider.BaseColumns;
 
