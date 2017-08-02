@@ -31,7 +31,7 @@
         android:layout_toRightOf="@id/avatar_image"
         android:layout_marginLeft="4dp"
         tools:text="Subhead"
-        android:id="@+id/avatar_subhead"
+        android:id="@+id/date"
         android:textAppearance="?android:textAppearanceSmall"
         android:textColor="#616161"/>
 

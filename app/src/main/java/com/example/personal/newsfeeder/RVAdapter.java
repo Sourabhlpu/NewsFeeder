@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.personal.newsfeeder.utilities.NewsFeederDateUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -277,7 +278,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         CardView cardView;
         TextView mAvatarView;
         TextView mAvatarNameView;
-        TextView mAvatarSubView;
+        TextView mDate;
         ImageView mImageView;
         TextView mTheTitleView;
         TextView mTheSubtitleView;
@@ -293,7 +294,7 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             cardView = (CardView) itemView.findViewById(R.id.card_view);
             mAvatarView = (TextView) itemView.findViewById(R.id.avatar_image);
             mAvatarNameView = (TextView) itemView.findViewById(R.id.avatar_name);
-            mAvatarSubView = (TextView) itemView.findViewById(R.id.avatar_subhead);
+            mDate = (TextView) itemView.findViewById(R.id.date);
             mImageView = (ImageView) itemView.findViewById(R.id.image_view);
             mTheTitleView = (TextView) itemView.findViewById(R.id.the_title);
             mTheThreeLinesView = (TextView) itemView.findViewById(R.id.the_three_lines);
@@ -337,8 +338,9 @@ public class RVAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         //Log.v(LOG_TAG, "The rowIndex is " + mRowIndex);
         holder.mAvatarView.setText(mArticles.get(position).getmAvatarInitial());
         holder.mAvatarNameView.setText(mArticles.get(position).getmAvatarName());
-        holder.mAvatarSubView.setText(mArticles.get(position).getmAvatarSub());
 
+        String dateString = NewsFeederDateUtils.getSimpleDate(mArticles.get(position).getmDate());
+        holder.mDate.setText(dateString);
 
         String imageUrl = mArticles.get(position).getmImageURL();
 

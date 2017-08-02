@@ -8,7 +8,7 @@ public class TheArticle {
 
     private String mAvatarInitial;
     private String mAvatarName;
-    private String mAvatarSub;
+    private String mDate;
     private String mImageURL = "https://goo.gl/PHbk71";
     private String mTheTitle;
 
@@ -17,12 +17,12 @@ public class TheArticle {
     private int mHeartResourceId;
     private String mDetailPageLink;
 
-    public TheArticle(String avatarName, String avatarSub, String imageURL,
+    public TheArticle(String avatarName, String date, String imageURL,
                       String theTitle, String theThreeLines, int bookmarkResourceId,
                       int heartResourceId, String detailPageLink) {
         mAvatarInitial = avatarName.charAt(0) + "";
         mAvatarName = avatarName;
-        mAvatarSub = avatarSub;
+        mDate = date;
         mImageURL = imageURL;
         mTheTitle = theTitle;
 
@@ -32,12 +32,12 @@ public class TheArticle {
         mDetailPageLink = detailPageLink;
     }
 
-    public TheArticle(String avatarName, String avatarSub, String imageURL,
+    public TheArticle(String avatarName, String date, String imageURL,
                       String theTitle, String theThreeLines, String detailPageLink
     ) {
         mAvatarInitial = avatarName.charAt(0) + "";
         mAvatarName = avatarName;
-        mAvatarSub = avatarSub;
+        mDate = date;
         mImageURL = imageURL;
         mTheTitle = theTitle;
         mDetailPageLink = detailPageLink;
@@ -54,8 +54,8 @@ public class TheArticle {
         return mAvatarName;
     }
 
-    public String getmAvatarSub() {
-        return mAvatarSub;
+    public String getmDate() {
+        return mDate;
 
     }
 

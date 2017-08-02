@@ -27,7 +27,7 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         avatarNameTv = (TextView) findViewById(R.id.avatar_name);
-        avatarSubTv = (TextView) findViewById(R.id.avatar_subhead);
+        avatarSubTv = (TextView) findViewById(R.id.date);
         mWebView = (WebView) findViewById(R.id.webView);
         avatarImage = (TextView) findViewById(R.id.avatar_image);
 
