@@ -15,6 +15,7 @@ public class ArticleLoader extends AsyncTaskLoader<List<TheArticle>> {
 
     // mURL stores the url for fetching the data.
     private String mURL;
+    List mArticles;
 
     /*
      * this constructor initializes the mURL
@@ -30,8 +31,15 @@ public class ArticleLoader extends AsyncTaskLoader<List<TheArticle>> {
     @Override
     protected void onStartLoading() {
 
-        //this method ignores the previously loaded data and load a new one.
-        forceLoad();
+        if(mArticles.isEmpty() || mArticles.size() == 0)
+        {
+            deliverResult(mArticles);
+        }
+        else {
+
+            //this method ignores the previously loaded data and load a new one.
+            forceLoad();
+        }
     }
 
     /*
@@ -48,5 +56,11 @@ public class ArticleLoader extends AsyncTaskLoader<List<TheArticle>> {
         }
         List<TheArticle> articles = QueryUtils.fetchArticles(mURL);
         return articles;
+    }
+
+    @Override
+    public void deliverResult(List<TheArticle> data) {
+        mArticles = data;
+        super.deliverResult(data);
     }
 }
