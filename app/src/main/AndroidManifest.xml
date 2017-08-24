@@ -30,6 +30,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.personal.newsfeeder.MainActivity" />
         </activity>
+        
+        <provider
+            android:authorities="@string/content_authority"
+            android:name="com.example.personal.newsfeeder.data.NewsProvider"
+            android:exported="false"/>
     </application>
 
 </manifest>
